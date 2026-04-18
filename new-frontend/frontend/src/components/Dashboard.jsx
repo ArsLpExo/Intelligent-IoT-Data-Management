@@ -4,7 +4,8 @@ import { useFilteredData } from '../hooks/useFilteredData.js';
 import { useStreamNames } from '../hooks/useStreamNames.js';
 import { useTimeRange } from '../hooks/useTimeRange.js';
 import TimeSelector from './TimeSelector.jsx';
-import StreamSelector from './StreamSelector.jsx';
+// import StreamSelector from './StreamSelector.jsx';
+import StreamDropdownSelector from "./StreamDropdownSelector.jsx";
 import IntervalSelector from './IntervalSelector.jsx';
 import StreamStats from './StreamStats.jsx';
 import './Dashboard.css';
@@ -85,12 +86,21 @@ const Dashboard = () => {
     <div className='selector-grid '>      
       <div className='selector-group card'>
 
-        <StreamSelector 
+        {/* <StreamSelector 
         data={data}
         // streams={streamNames}
         selectedStreams={selectedStreams}
         setSelectedStreams={setSelectedStreams}
+        /> */}
+
+    
+       <StreamDropdownSelector
+        streams={streamNames.map(s => s.name)}
+        selectedStreams={selectedStreams}
+        setSelectedStreams={setSelectedStreams}
         />
+
+
       </div>
       <div className='selector-group card'> 
       <IntervalSelector
