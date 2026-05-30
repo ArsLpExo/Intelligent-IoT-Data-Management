@@ -9,8 +9,10 @@ export const useFilteredData = (data, { startTime, endTime, minEntryId, maxEntry
       const entryId = entry.entry_id;
 
       const timeMatch =
-        (!startTime || entryTime >= new Date(startTime).getTime()) &&
-        (!endTime || entryTime <= new Date(endTime).getTime());
+        (!startTime || entryTime >= startTime) &&
+        (!endTime || entryTime <= endTime);
+        // (!startTime || entryTime >= new Date(startTime).getTime()) &&
+        // (!endTime || entryTime <= new Date(endTime).getTime());
 
       const idMatch =
         (!minEntryId || entryId >= minEntryId) &&

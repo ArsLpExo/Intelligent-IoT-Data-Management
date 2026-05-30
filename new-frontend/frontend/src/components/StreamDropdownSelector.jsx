@@ -36,6 +36,17 @@ const StreamDropdownSelector = ({ streams, selectedStreams, setSelectedStreams }
     }
   };
 
+    // Select All / Deselect All
+  const toggleSelectAll = () => {
+    if (selectedStreams.length === streams.length) {
+      // All selected → deselect all
+      setSelectedStreams([]);
+    } else {
+      // Not all selected → select all
+      setSelectedStreams([...streams]);
+    }
+  };
+
   /**
    * useEffect() — Click Outside to Close Dropdown
    * ---------------------------------------------
@@ -59,6 +70,11 @@ const StreamDropdownSelector = ({ streams, selectedStreams, setSelectedStreams }
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+    // Determine Select All checkbox state
+    const allSelected = selectedStreams.length === streams.length;
+    const noneSelected = selectedStreams.length === 0;
+    const isIndeterminate = !allSelected && !noneSelected;
+
   return (
     // Wrapper div with ref for click‑outside detection
     <div className="stream-dropdown" ref={dropdownRef}>
@@ -71,6 +87,23 @@ const StreamDropdownSelector = ({ streams, selectedStreams, setSelectedStreams }
       {/* Dropdown menu — only rendered when open */}
       {open && (
         <div className="dropdown-menu">
+
+          {/* Select All Option */}
+          <label className="dropdown-item select-all-item">
+            <input
+              type="checkbox"
+              checked={allSelected}
+              ref={(el) => {
+                if (el) el.indeterminate = isIndeterminate;
+              }}
+              onChange={toggleSelectAll}
+            />
+            Select All
+          </label>
+
+          <hr className="dropdown-divider" />
+
+          {/* Individual Streams */}
           {streams.map((stream) => (
             <label key={stream} className="dropdown-item">
 
